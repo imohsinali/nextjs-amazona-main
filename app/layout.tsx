@@ -4,6 +4,7 @@ import './globals.css';
 import { APP_DESCRIPTION, APP_NAME, APP_SLOGAN } from '@/lib/constants';
 import ClientProviders from '@/components/shared/client-providers';
 import { SessionProvider } from 'next-auth/react';
+import { type DefaultSession } from 'next-auth';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -22,13 +23,19 @@ export const metadata: Metadata = {
   },
   description: APP_DESCRIPTION,
 };
+interface Session {
+  user: {
+    role: string;
+  } & DefaultSession['user'];
 
+  expires: string;
+}
 export default function RootLayout({
   children,
   pageProps,
 }: Readonly<{
   children: React.ReactNode;
-  pageProps: object;
+  pageProps: { session: Session };
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
