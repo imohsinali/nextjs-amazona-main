@@ -1,24 +1,24 @@
-'use client'
+'use client';
 
-import * as React from 'react'
+import * as React from 'react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel'
-import ProductCard from './product-card'
-import { IProduct } from '@/lib/db/models/product.model'
+} from '@/components/ui/carousel';
+import ProductCard from './product-card';
+import { IProduct } from '@/lib/db/models/product.model';
 
 export default function ProductSlider({
   title,
   products,
   hideDetails = false,
 }: {
-  title?: string
-  products: IProduct[]
-  hideDetails?: boolean
+  title?: string;
+  products: IProduct[];
+  hideDetails?: boolean;
 }) {
   return (
     <div className='w-full bg-background'>
@@ -52,5 +52,5 @@ export default function ProductSlider({
         <CarouselNext className='right-0' />
       </Carousel>
     </div>
-  )
+  );
 }

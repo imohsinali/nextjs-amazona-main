@@ -26,7 +26,6 @@ export default async function Page() {
     limit: 4,
   });
 
-  console.log('categories', categories);
   const cards = [
     {
       title: 'Categories to explore',
@@ -73,7 +72,7 @@ export default async function Page() {
     <>
       <HomeCarousel items={data.carousels} />
       <div className='md:p-4 md:space-y-4 bg-border'>
-        <HomeCard cards={cards} />
+        {/* <HomeCard cards={cards} /> */}
 
         <Card className='w-full rounded-none'>
           <CardContent className='p-4 items-center gap-3'>
