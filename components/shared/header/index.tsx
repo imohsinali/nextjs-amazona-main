@@ -26,9 +26,13 @@ export default async function Header() {
       <div className='px-2'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
+            <div className='md:hidden'>
+              <Sidebar />
+            </div>
+
             <Link
               href='/'
-              className='flex items-center header-button font-extrabold text-2xl m-1 '
+              className='sm:text-2xl flex items-center header-button font-extrabold text-lg m-[10px] '
             >
               <Image
                 src='/icons/logo.svg'
@@ -43,13 +47,17 @@ export default async function Header() {
             <Search />
           </div>
           <Menu />
+          {/* <CartButton  /> */}
         </div>
         <div className='md:hidden block py-2'>
           <Search />
         </div>
       </div>
       <div className='flex items-center px-3 mb-[1px]  bg-gray-800'>
-        <Sidebar />
+        <div className='hidden md:block '>
+          <Sidebar />
+        </div>
+
         <div className='flex items-center flex-wrap gap-3 overflow-hidden   max-h-[42px]'>
           <HeaderMenus />
         </div>
