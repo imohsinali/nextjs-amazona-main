@@ -32,7 +32,7 @@ export default async function Header() {
 
             <Link
               href='/'
-              className='sm:text-2xl flex items-center header-button font-extrabold text-lg m-[10px] '
+              className='sm:text-2xl flex items-center  font-extrabold text-lg m-[10px] '
             >
               <Image
                 src='/icons/logo.svg'

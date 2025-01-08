@@ -15,7 +15,7 @@ export default function Sidebar() {
   // const serverComponent = React.use(SideBarHeader);
   return (
     <Drawer direction='left' onOpenChange={(e) => setOpen(e)}>
-      <DrawerTrigger className='header-button flex items-center md:!p-2  '>
+      <DrawerTrigger className=' flex items-center md:!p-2  '>
         <MenuIcon className='h-10 w-8 mr-[-20px] md:h-5 md:w-5 md:mr-1  ' />
         <span className='hidden md:block'>All</span>
       </DrawerTrigger>

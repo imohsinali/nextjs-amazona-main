@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import {
   getProductBySlug,
   getRelatedProductsByCategory,
@@ -17,6 +16,8 @@ import RatingSummary from '@/components/shared/product/rating-summary';
 import ReviewList from './review-list';
 import { auth } from '@/auth';
 import { Skeleton } from '@/components/ui/skeleton';
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;

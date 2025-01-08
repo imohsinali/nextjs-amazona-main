@@ -1,29 +1,31 @@
-'use client'
-import BrowsingHistoryList from '@/components/shared/browsing-history-list'
-import ProductPrice from '@/components/shared/product/product-price'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+'use client';
+import BrowsingHistoryList from '@/components/shared/browsing-history-list';
+import ProductPrice from '@/components/shared/product/product-price';
+import { Button } from '@/components/ui/button';
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
+import CardHeader from '@/components/ui/cardHeader';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import useCartStore from '@/hooks/use-cart-store'
-import { APP_NAME, FREE_SHIPPING_MIN_PRICE } from '@/lib/constants'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React from 'react'
+} from '@/components/ui/select';
+import useCartStore from '@/hooks/use-cart-store';
+import { APP_NAME, FREE_SHIPPING_MIN_PRICE } from '@/lib/constants';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
 export default function CartPage() {
   const {
     cart: { items, itemsPrice },
     updateItem,
     removeItem,
-  } = useCartStore()
-  const router = useRouter()
+  } = useCartStore();
+  const router = useRouter();
   return (
     <div>
       <div className='grid grid-cols-1 md:grid-cols-4  md:gap-4'>
@@ -187,5 +189,5 @@ export default function CartPage() {
       </div>
       <BrowsingHistoryList className='mt-10' />
     </div>
-  )
+  );
 }

@@ -1,15 +1,18 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { IProduct } from '@/lib/db/models/product.model'
+import { IProduct } from '@/lib/db/models/product.model';
 
-import Rating from './rating'
-import { formatNumber, generateId, round2 } from '@/lib/utils'
-import ProductPrice from './product-price'
-import ImageHover from './image-hover'
-import AddToCart from './add-to-cart'
+import Rating from './rating';
+import { formatNumber, generateId, round2 } from '@/lib/utils';
+import ProductPrice from './product-price';
+import ImageHover from './image-hover';
+import AddToCart from './add-to-cart';
+import Card from '@/components/ui/card';
+import CardHeader from '@/components/ui/cardHeader';
+import CardContent from '@/components/ui/cardContent';
+import CardFooter from '@/components/ui/cardFooter';
 
 const ProductCard = ({
   product,
@@ -17,10 +20,10 @@ const ProductCard = ({
   hideDetails = false,
   hideAddToCart = false,
 }: {
-  product: IProduct
-  hideDetails?: boolean
-  hideBorder?: boolean
-  hideAddToCart?: boolean
+  product: IProduct;
+  hideDetails?: boolean;
+  hideBorder?: boolean;
+  hideAddToCart?: boolean;
 }) => {
   const ProductImage = () => (
     <Link href={`/product/${product.slug}`}>
@@ -44,7 +47,7 @@ const ProductCard = ({
         )}
       </div>
     </Link>
-  )
+  );
   const ProductDetails = () => (
     <div className='flex-1 space-y-2'>
       <p className='font-bold'>{product.brand}</p>
@@ -71,7 +74,7 @@ const ProductCard = ({
         forListing
       />
     </div>
-  )
+  );
   const AddButton = () => (
     <div className='w-full text-center'>
       <AddToCart
@@ -91,7 +94,7 @@ const ProductCard = ({
         }}
       />
     </div>
-  )
+  );
 
   return hideBorder ? (
     <div className='flex flex-col'>
@@ -121,7 +124,7 @@ const ProductCard = ({
         </>
       )}
     </Card>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

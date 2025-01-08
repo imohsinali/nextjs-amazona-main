@@ -1,86 +1,42 @@
-import BrowsingHistoryList from '@/components/shared/browsing-history-list';
-import { HomeCard } from '@/components/shared/home/home-card';
+// import { HomeCard } from '@/components/shared/home/home-card';
 import { HomeCarousel } from '@/components/shared/home/home-carousel';
-import ProductSlider from '@/components/shared/product/product-slider';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  getAllCategories,
-  getProductsByTag,
-  getProductsForCard,
-} from '@/lib/actions/product.actions';
+// import ProductSlider from '@/components/shared/product/product-slider';
+// import { getProductsByTag } from '@/lib/actions/product.actions';
 import data from '@/lib/data';
-import { toSlug } from '@/lib/utils';
+// import { Loader } from 'lucide-react';
+// import { Loader } from 'lucide-react';
+import dynamic from 'next/dynamic';
+const HomeCard = dynamic(
+  () => import('../../components/shared/home/home-card'),
+  {
+    // loading: () => <Loader />,
+    ssr: true,
+  }
+);
+// const BrowsingHistoryList = dynamic(
+//   () => import('../../components/shared/browsing-history-list'),
+//   {
+//     loading: () => <Loader className='flex justify-center items-center' />,
+//   }
+// );
 
 export default async function Page() {
-  const categories = (await getAllCategories()).slice(0, 4);
-  const newArrivals = await getProductsForCard({
-    tag: 'new-arrival',
-    limit: 4,
-  });
-  const featureds = await getProductsForCard({
-    tag: 'featured',
-    limit: 4,
-  });
-  const bestSellers = await getProductsForCard({
-    tag: 'best-seller',
-    limit: 4,
-  });
-
-  const cards = [
-    {
-      title: 'Categories to explore',
-      link: {
-        text: 'See More',
-        href: '/search',
-      },
-      items: categories.map((category) => ({
-        name: category,
-        image: `/images/${toSlug(category)}.jpg`,
-        href: `/search?category=${category}`,
-      })),
-    },
-    {
-      title: 'Explore New Arrivals',
-      items: newArrivals,
-      link: {
-        text: 'View All',
-        href: '/search?tag=new-arrival',
-      },
-    },
-    {
-      title: 'Discover Best Sellers',
-      items: bestSellers,
-      link: {
-        text: 'View All',
-        href: '/search?tag=new-arrival',
-      },
-    },
-    {
-      title: 'Featured Products',
-      items: featureds,
-      link: {
-        text: 'Shop Now',
-        href: '/search?tag=new-arrival',
-      },
-    },
-  ];
-
-  const todaysDeals = await getProductsByTag({ tag: 'todays-deal' });
-  const bestSellingProducts = await getProductsByTag({ tag: 'best-seller' });
+  // const todaysDeals = await getProductsByTag({ tag: 'todays-deal' });
+  // const bestSellingProducts = await getProductsByTag({ tag: 'best-seller' });
 
   return (
     <>
       <HomeCarousel items={data.carousels} />
       <div className='md:p-4 md:space-y-4 bg-border'>
-        <HomeCard cards={cards} />
+        <HomeCard />
 
-        <Card className='w-full rounded-none'>
+        {/* <Card className='w-full rounded-none'>
           <CardContent className='p-4 items-center gap-3'>
             <ProductSlider title={"Today's Deals"} products={todaysDeals} />
           </CardContent>
-        </Card>
+        </Card> */}
 
-        <Card className='w-full rounded-none'>
+        {/* <Card className='w-full rounded-none'>
           <CardContent className='p-4 items-center gap-3'>
             <ProductSlider
               title='Best Selling Products'
@@ -88,11 +44,9 @@ export default async function Page() {
               hideDetails
             />
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
-      <div className='p-4 bg-background'>
-        <BrowsingHistoryList />
-      </div>
+      <div className='p-4 bg-background'>{/* <BrowsingHistoryList /> */}</div>
     </>
   );
 }
