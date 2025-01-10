@@ -1,23 +1,24 @@
-'use client'
-import ProductPrice from '@/components/shared/product/product-price'
-import { buttonVariants } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
-import { CheckCircle2Icon } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import useCartStore from '@/hooks/use-cart-store'
-import { FREE_SHIPPING_MIN_PRICE } from '@/lib/constants'
-import BrowsingHistoryList from '@/components/shared/browsing-history-list'
+'use client';
+import ProductPrice from '@/components/shared/product/product-price';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { CheckCircle2Icon } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import useCartStore from '@/hooks/use-cart-store';
+import { FREE_SHIPPING_MIN_PRICE } from '@/lib/constants';
+import BrowsingHistoryList from '@/components/shared/browsing-history-list';
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
 
 export default function CartAddItem({ itemId }: { itemId: string }) {
   const {
     cart: { items, itemsPrice },
-  } = useCartStore()
-  const item = items.find((x) => x.clientId === itemId)
+  } = useCartStore();
+  const item = items.find((x) => x.clientId === itemId);
 
-  if (!item) return notFound()
+  if (!item) return notFound();
   return (
     <div>
       <div className='grid grid-cols-1 md:grid-cols-2 md:gap-4'>
@@ -104,5 +105,5 @@ export default function CartAddItem({ itemId }: { itemId: string }) {
 
       <BrowsingHistoryList />
     </div>
-  )
+  );
 }

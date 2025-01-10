@@ -1,19 +1,20 @@
-import { Metadata } from 'next'
-import { SessionProvider } from 'next-auth/react'
+import { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
 
-import { auth } from '@/auth'
+import { auth } from '@/auth';
 
-import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { Button } from '@/components/ui/button'
+import Link from 'next/link';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import CardContent from '@/components/ui/cardContent';
+import Card from '@/components/ui/card';
 
-const PAGE_TITLE = 'Login & Security'
+const PAGE_TITLE = 'Login & Security';
 export const metadata: Metadata = {
   title: PAGE_TITLE,
-}
+};
 export default async function ProfilePage() {
-  const session = await auth()
+  const session = await auth();
   return (
     <div className='mb-24'>
       <SessionProvider session={session}>
@@ -78,5 +79,5 @@ export default async function ProfilePage() {
         </Card>
       </SessionProvider>
     </div>
-  )
+  );
 }
