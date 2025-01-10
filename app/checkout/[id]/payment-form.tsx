@@ -1,6 +1,7 @@
 'use client';
 
-import { Card, CardContent } from '@/components/ui/card';
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
 
 import { IOrder } from '@/lib/db/models/order.model';
 import { formatDateTime } from '@/lib/utils';
