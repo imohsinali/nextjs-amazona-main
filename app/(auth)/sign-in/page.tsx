@@ -1,32 +1,36 @@
-import { Metadata } from 'next'
-import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { Metadata } from 'next';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
-import { auth } from '@/auth'
-import SeparatorWithOr from '@/components/shared/separator-or'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { auth } from '@/auth';
+import SeparatorWithOr from '@/components/shared/separator-or';
 
-import CredentialsSignInForm from './credentials-signin-form'
-import { Button } from '@/components/ui/button'
-import { APP_NAME } from '@/lib/constants'
-import { GoogleSignInForm } from './google-signin-form'
+import Card from '@/components/ui/card';
+import CardTitle from '@/components/ui/cardTitle';
+import CardHeader from '@/components/ui/cardHeader';
+import CardContent from '@/components/ui/cardContent';
+
+import CredentialsSignInForm from './credentials-signin-form';
+import { Button } from '@/components/ui/button';
+import { APP_NAME } from '@/lib/constants';
+import { GoogleSignInForm } from './google-signin-form';
 
 export const metadata: Metadata = {
   title: 'Sign In',
-}
+};
 
 export default async function SignIn(props: {
   searchParams: Promise<{
-    callbackUrl: string
-  }>
+    callbackUrl: string;
+  }>;
 }) {
-  const searchParams = await props.searchParams
+  const searchParams = await props.searchParams;
 
-  const { callbackUrl = '/' } = searchParams
+  const { callbackUrl = '/' } = searchParams;
 
-  const session = await auth()
+  const session = await auth();
   if (session) {
-    return redirect(callbackUrl)
+    return redirect(callbackUrl);
   }
 
   return (
@@ -53,5 +57,5 @@ export default async function SignIn(props: {
         </Button>
       </Link>
     </div>
-  )
+  );
 }

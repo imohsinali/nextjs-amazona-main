@@ -1,6 +1,5 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-// import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 const HomeCard1 = dynamic(() => import('./home-card1'));
 const HomeCard2 = dynamic(() => import('./home-card2'));

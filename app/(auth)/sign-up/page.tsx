@@ -1,27 +1,30 @@
-import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { auth } from '@/auth'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { auth } from '@/auth';
+import Card from '@/components/ui/card';
+import CardTitle from '@/components/ui/cardTitle';
+import CardHeader from '@/components/ui/cardHeader';
+import CardContent from '@/components/ui/cardContent';
 
-import SignUpForm from './signup-form'
+import SignUpForm from './signup-form';
 
 export const metadata: Metadata = {
   title: 'Sign Up',
-}
+};
 
 export default async function SignUpPage(props: {
   searchParams: Promise<{
-    callbackUrl: string
-  }>
+    callbackUrl: string;
+  }>;
 }) {
-  const searchParams = await props.searchParams
+  const searchParams = await props.searchParams;
 
-  const { callbackUrl } = searchParams
+  const { callbackUrl } = searchParams;
 
-  const session = await auth()
+  const session = await auth();
   if (session) {
-    return redirect(callbackUrl || '/')
+    return redirect(callbackUrl || '/');
   }
 
   return (
@@ -35,5 +38,5 @@ export default async function SignUpPage(props: {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

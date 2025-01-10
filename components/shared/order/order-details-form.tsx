@@ -1,10 +1,12 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge';
+
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
 import {
   Table,
   TableBody,
@@ -12,20 +14,20 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { IOrder } from '@/lib/db/models/order.model'
-import { cn, formatDateTime } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
-import ProductPrice from '../product/product-price'
-import ActionButton from '../action-button'
-import { deliverOrder, updateOrderToPaid } from '@/lib/actions/order.actions'
+} from '@/components/ui/table';
+import { IOrder } from '@/lib/db/models/order.model';
+import { cn, formatDateTime } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
+import ProductPrice from '../product/product-price';
+import ActionButton from '../action-button';
+import { deliverOrder, updateOrderToPaid } from '@/lib/actions/order.actions';
 
 export default function OrderDetailsForm({
   order,
   isAdmin,
 }: {
-  order: IOrder
-  isAdmin: boolean
+  order: IOrder;
+  isAdmin: boolean;
 }) {
   const {
     shippingAddress,
@@ -40,7 +42,7 @@ export default function OrderDetailsForm({
     isDelivered,
     deliveredAt,
     expectedDeliveryDate,
-  } = order
+  } = order;
 
   return (
     <div className='grid md:grid-cols-3 md:gap-5'>
@@ -181,5 +183,5 @@ export default function OrderDetailsForm({
         </Card>
       </div>
     </div>
-  )
+  );
 }

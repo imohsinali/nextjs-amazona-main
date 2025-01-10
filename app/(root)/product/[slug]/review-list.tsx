@@ -1,21 +1,20 @@
-'use client'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Calendar, Check, StarIcon, User } from 'lucide-react'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useInView } from 'react-intersection-observer'
-import { z } from 'zod'
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Calendar, Check, StarIcon, User } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useInView } from 'react-intersection-observer';
+import { z } from 'zod';
 
-import Rating from '@/components/shared/product/rating'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import Rating from '@/components/shared/product/rating';
+import { Button } from '@/components/ui/button';
+
+import Card from '@/components/ui/card';
+import CardTitle from '@/components/ui/cardTitle';
+import CardHeader from '@/components/ui/cardHeader';
+import CardContent from '@/components/ui/cardContent';
+
 import {
   Dialog,
   DialogContent,
@@ -23,7 +22,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -31,122 +30,123 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
-import { useToast } from '@/hooks/use-toast'
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
 import {
   createUpdateReview,
   getReviewByProductId,
   getReviews,
-} from '@/lib/actions/review.actions'
-import { ReviewInputSchema } from '@/lib/validator'
-import RatingSummary from '@/components/shared/product/rating-summary'
-import { IProduct } from '@/lib/db/models/product.model'
-import { Separator } from '@/components/ui/separator'
-import { IReviewDetails } from '@/types'
+} from '@/lib/actions/review.actions';
+import { ReviewInputSchema } from '@/lib/validator';
+import RatingSummary from '@/components/shared/product/rating-summary';
+import { IProduct } from '@/lib/db/models/product.model';
+import { Separator } from '@/components/ui/separator';
+import { IReviewDetails } from '@/types';
+import CardDescription from '@/components/ui/cardDescription';
 
 const reviewFormDefaultValues = {
   title: '',
   comment: '',
   rating: 0,
-}
+};
 
 export default function ReviewList({
   userId,
   product,
 }: {
-  userId: string | undefined
-  product: IProduct
+  userId: string | undefined;
+  product: IProduct;
 }) {
-  const [page, setPage] = useState(2)
-  const [totalPages, setTotalPages] = useState(0)
-  const [reviews, setReviews] = useState<IReviewDetails[]>([])
-  const { ref, inView } = useInView({ triggerOnce: true })
+  const [page, setPage] = useState(2);
+  const [totalPages, setTotalPages] = useState(0);
+  const [reviews, setReviews] = useState<IReviewDetails[]>([]);
+  const { ref, inView } = useInView({ triggerOnce: true });
   const reload = async () => {
     try {
-      const res = await getReviews({ productId: product._id, page: 1 })
-      setReviews([...res.data])
-      setTotalPages(res.totalPages)
+      const res = await getReviews({ productId: product._id, page: 1 });
+      setReviews([...res.data]);
+      setTotalPages(res.totalPages);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       toast({
         variant: 'destructive',
         description: 'Error in fetching reviews',
-      })
+      });
     }
-  }
+  };
 
   const loadMoreReviews = async () => {
-    if (totalPages !== 0 && page > totalPages) return
-    setLoadingReviews(true)
-    const res = await getReviews({ productId: product._id, page })
-    setLoadingReviews(false)
-    setReviews([...reviews, ...res.data])
-    setTotalPages(res.totalPages)
-    setPage(page + 1)
-  }
+    if (totalPages !== 0 && page > totalPages) return;
+    setLoadingReviews(true);
+    const res = await getReviews({ productId: product._id, page });
+    setLoadingReviews(false);
+    setReviews([...reviews, ...res.data]);
+    setTotalPages(res.totalPages);
+    setPage(page + 1);
+  };
 
-  const [loadingReviews, setLoadingReviews] = useState(false)
+  const [loadingReviews, setLoadingReviews] = useState(false);
   useEffect(() => {
     const loadReviews = async () => {
-      setLoadingReviews(true)
-      const res = await getReviews({ productId: product._id, page: 1 })
-      setReviews([...res.data])
-      setTotalPages(res.totalPages)
-      setLoadingReviews(false)
-    }
+      setLoadingReviews(true);
+      const res = await getReviews({ productId: product._id, page: 1 });
+      setReviews([...res.data]);
+      setTotalPages(res.totalPages);
+      setLoadingReviews(false);
+    };
 
     if (inView) {
-      loadReviews()
+      loadReviews();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView])
+  }, [inView]);
 
-  type CustomerReview = z.infer<typeof ReviewInputSchema>
+  type CustomerReview = z.infer<typeof ReviewInputSchema>;
   const form = useForm<CustomerReview>({
     resolver: zodResolver(ReviewInputSchema),
     defaultValues: reviewFormDefaultValues,
-  })
-  const [open, setOpen] = useState(false)
-  const { toast } = useToast()
+  });
+  const [open, setOpen] = useState(false);
+  const { toast } = useToast();
   const onSubmit: SubmitHandler<CustomerReview> = async (values) => {
     const res = await createUpdateReview({
       data: { ...values, product: product._id },
       path: `/product/${product.slug}`,
-    })
+    });
     if (!res.success)
       return toast({
         variant: 'destructive',
         description: res.message,
-      })
-    setOpen(false)
-    reload()
+      });
+    setOpen(false);
+    reload();
     toast({
       description: res.message,
-    })
-  }
+    });
+  };
 
   const handleOpenForm = async () => {
-    form.setValue('product', product._id)
-    form.setValue('user', userId!)
-    form.setValue('isVerifiedPurchase', true)
-    const review = await getReviewByProductId({ productId: product._id })
+    form.setValue('product', product._id);
+    form.setValue('user', userId!);
+    form.setValue('isVerifiedPurchase', true);
+    const review = await getReviewByProductId({ productId: product._id });
     if (review) {
-      form.setValue('title', review.title)
-      form.setValue('comment', review.comment)
-      form.setValue('rating', review.rating)
+      form.setValue('title', review.title);
+      form.setValue('comment', review.comment);
+      form.setValue('rating', review.rating);
     }
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   return (
     <div className='space-y-2'>
       {reviews.length === 0 && <div>No reviews yet</div>}
@@ -326,5 +326,5 @@ export default function ReviewList({
         </div>
       </div>
     </div>
-  )
+  );
 }

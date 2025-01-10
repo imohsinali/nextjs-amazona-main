@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client'
+'use client';
 
-import ProductPrice from '@/components/shared/product/product-price'
-import { Card, CardContent } from '@/components/ui/card'
-import useColorStore from '@/hooks/use-color-store'
-import { formatDateTime } from '@/lib/utils'
-import { useTheme } from 'next-themes'
-import React from 'react'
+import ProductPrice from '@/components/shared/product/product-price';
+
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
+
+import useColorStore from '@/hooks/use-color-store';
+import { formatDateTime } from '@/lib/utils';
+import { useTheme } from 'next-themes';
+import React from 'react';
 import {
   Area,
   AreaChart,
@@ -16,12 +19,12 @@ import {
   TooltipProps,
   XAxis,
   YAxis,
-} from 'recharts'
+} from 'recharts';
 
 interface CustomTooltipProps extends TooltipProps<number, string> {
-  active?: boolean
-  payload?: { value: number }[]
-  label?: string
+  active?: boolean;
+  payload?: { value: number }[];
+  label?: string;
 }
 
 const CustomTooltip: React.FC<CustomTooltipProps> = ({
@@ -39,10 +42,10 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
           </p>
         </CardContent>
       </Card>
-    )
+    );
   }
-  return null
-}
+  return null;
+};
 
 const CustomXAxisTick: React.FC<any> = ({ x, y, payload }) => {
   return (
@@ -50,17 +53,17 @@ const CustomXAxisTick: React.FC<any> = ({ x, y, payload }) => {
       {formatDateTime(new Date(payload.value)).dateOnly}
       {/* {`${payload.value.split('/')[1]}/${payload.value.split('/')[2]}`} */}
     </text>
-  )
-}
+  );
+};
 const STROKE_COLORS: { [key: string]: { [key: string]: string } } = {
   Red: { light: '#980404', dark: '#ff3333' },
   Green: { light: '#015001', dark: '#06dc06' },
   Gold: { light: '#ac9103', dark: '#f1d541' },
-}
+};
 
 export default function SalesAreaChart({ data }: { data: any[] }) {
-  const { theme } = useTheme()
-  const { cssColors, color } = useColorStore(theme)
+  const { theme } = useTheme();
+  const { cssColors, color } = useColorStore(theme);
 
   return (
     <ResponsiveContainer width='100%' height={400}>
@@ -79,5 +82,5 @@ export default function SalesAreaChart({ data }: { data: any[] }) {
         />
       </AreaChart>
     </ResponsiveContainer>
-  )
+  );
 }

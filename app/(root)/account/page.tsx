@@ -1,14 +1,17 @@
-import BrowsingHistoryList from '@/components/shared/browsing-history-list'
-import { Card, CardContent } from '@/components/ui/card'
-import { Home, PackageCheckIcon, User } from 'lucide-react'
-import { Metadata } from 'next'
-import Link from 'next/link'
-import React from 'react'
+import BrowsingHistoryList from '@/components/shared/browsing-history-list';
+import { Home, PackageCheckIcon, User } from 'lucide-react';
 
-const PAGE_TITLE = 'Your Account'
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
+
+import { Metadata } from 'next';
+import Link from 'next/link';
+import React from 'react';
+
+const PAGE_TITLE = 'Your Account';
 export const metadata: Metadata = {
   title: PAGE_TITLE,
-}
+};
 export default function AccountPage() {
   return (
     <div>
@@ -64,5 +67,5 @@ export default function AccountPage() {
       </div>
       <BrowsingHistoryList className='mt-16' />
     </div>
-  )
+  );
 }

@@ -1,11 +1,13 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
+
 import {
   Form,
   FormControl,
@@ -14,18 +16,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { useToast } from '@/hooks/use-toast'
-import { createProduct, updateProduct } from '@/lib/actions/product.actions'
-import { IProduct } from '@/lib/db/models/product.model'
-import { UploadButton } from '@/lib/uploadthing'
-import { ProductInputSchema, ProductUpdateSchema } from '@/lib/validator'
-import { Checkbox } from '@/components/ui/checkbox'
-import { toSlug } from '@/lib/utils'
-import { IProductInput } from '@/types'
-import { Trash } from 'lucide-react'
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { createProduct, updateProduct } from '@/lib/actions/product.actions';
+import { IProduct } from '@/lib/db/models/product.model';
+import { UploadButton } from '@/lib/uploadthing';
+import { ProductInputSchema, ProductUpdateSchema } from '@/lib/validator';
+import { Checkbox } from '@/components/ui/checkbox';
+import { toSlug } from '@/lib/utils';
+import { IProductInput } from '@/types';
+import { Trash } from 'lucide-react';
 
 const productDefaultValues: IProductInput =
   process.env.NODE_ENV === 'development'
@@ -68,18 +70,18 @@ const productDefaultValues: IProductInput =
         colors: [],
         ratingDistribution: [],
         reviews: [],
-      }
+      };
 
 const ProductForm = ({
   type,
   product,
   productId,
 }: {
-  type: 'Create' | 'Update'
-  product?: IProduct
-  productId?: string
+  type: 'Create' | 'Update';
+  product?: IProduct;
+  productId?: string;
 }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<IProductInput>({
     resolver:
@@ -88,42 +90,42 @@ const ProductForm = ({
         : zodResolver(ProductInputSchema),
     defaultValues:
       product && type === 'Update' ? product : productDefaultValues,
-  })
+  });
 
-  const { toast } = useToast()
+  const { toast } = useToast();
   async function onSubmit(values: IProductInput) {
     if (type === 'Create') {
-      const res = await createProduct(values)
+      const res = await createProduct(values);
       if (!res.success) {
         toast({
           variant: 'destructive',
           description: res.message,
-        })
+        });
       } else {
         toast({
           description: res.message,
-        })
-        router.push(`/admin/products`)
+        });
+        router.push(`/admin/products`);
       }
     }
     if (type === 'Update') {
       if (!productId) {
-        router.push(`/admin/products`)
-        return
+        router.push(`/admin/products`);
+        return;
       }
-      const res = await updateProduct({ ...values, _id: productId })
+      const res = await updateProduct({ ...values, _id: productId });
       if (!res.success) {
         toast({
           variant: 'destructive',
           description: res.message,
-        })
+        });
       } else {
-        router.push(`/admin/products`)
+        router.push(`/admin/products`);
       }
     }
   }
 
-  const images = form.watch('images')
+  const images = form.watch('images');
 
   return (
     <Form {...form}>
@@ -165,7 +167,7 @@ const ProductForm = ({
                     <button
                       type='button'
                       onClick={() => {
-                        form.setValue('slug', toSlug(form.getValues('name')))
+                        form.setValue('slug', toSlug(form.getValues('name')));
                       }}
                       className='absolute right-2 top-2.5'
                     >
@@ -284,7 +286,7 @@ const ProductForm = ({
                               form.setValue(
                                 'images',
                                 images.filter((img) => img !== image)
-                              )
+                              );
                             }}
                           >
                             <Trash />
@@ -295,13 +297,13 @@ const ProductForm = ({
                         <UploadButton
                           endpoint='imageUploader'
                           onClientUploadComplete={(res: { url: string }[]) => {
-                            form.setValue('images', [...images, res[0].url])
+                            form.setValue('images', [...images, res[0].url]);
                           }}
                           onUploadError={(error: Error) => {
                             toast({
                               variant: 'destructive',
                               description: `ERROR! ${error.message}`,
-                            })
+                            });
                           }}
                         />
                       </FormControl>
@@ -367,7 +369,7 @@ const ProductForm = ({
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default ProductForm
+export default ProductForm;

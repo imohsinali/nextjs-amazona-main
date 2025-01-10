@@ -1,14 +1,13 @@
-'use client'
-import { BadgeDollarSign, Barcode, CreditCard, Users } from 'lucide-react'
+'use client';
+import { BadgeDollarSign, Barcode, CreditCard, Users } from 'lucide-react';
 
-import Link from 'next/link'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import Link from 'next/link';
+
+import Card from '@/components/ui/card';
+import CardTitle from '@/components/ui/cardTitle';
+import CardHeader from '@/components/ui/cardHeader';
+import CardContent from '@/components/ui/cardContent';
+
 import {
   Table,
   TableBody,
@@ -16,38 +15,39 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { calculatePastDate, formatDateTime, formatNumber } from '@/lib/utils'
+} from '@/components/ui/table';
+import { calculatePastDate, formatDateTime, formatNumber } from '@/lib/utils';
 
-import SalesCategoryPieChart from './sales-category-pie-chart'
+import SalesCategoryPieChart from './sales-category-pie-chart';
 
-import React, { useEffect, useState, useTransition } from 'react'
-import { DateRange } from 'react-day-picker'
-import { getOrderSummary } from '@/lib/actions/order.actions'
-import SalesAreaChart from './sales-area-chart'
-import { CalendarDateRangePicker } from './date-range-picker'
-import { IOrderList } from '@/types'
-import ProductPrice from '@/components/shared/product/product-price'
-import TableChart from './table-chart'
-import { Skeleton } from '@/components/ui/skeleton'
+import React, { useEffect, useState, useTransition } from 'react';
+import { DateRange } from 'react-day-picker';
+import { getOrderSummary } from '@/lib/actions/order.actions';
+import SalesAreaChart from './sales-area-chart';
+import { CalendarDateRangePicker } from './date-range-picker';
+import { IOrderList } from '@/types';
+import ProductPrice from '@/components/shared/product/product-price';
+import TableChart from './table-chart';
+import { Skeleton } from '@/components/ui/skeleton';
+import CardDescription from '@/components/ui/cardDescription';
 
 export default function OverviewReport() {
   const [date, setDate] = useState<DateRange | undefined>({
     from: calculatePastDate(30),
     to: new Date(),
-  })
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, setData] = useState<{ [key: string]: any }>()
+  const [data, setData] = useState<{ [key: string]: any }>();
 
-  const [isPending, startTransition] = useTransition()
+  const [isPending, startTransition] = useTransition();
   useEffect(() => {
     if (date) {
       startTransition(async () => {
-        setData(await getOrderSummary(date))
-      })
+        setData(await getOrderSummary(date));
+      });
     }
-  }, [date])
+  }, [date]);
 
   if (!data || isPending)
     return (
@@ -81,7 +81,7 @@ export default function OverviewReport() {
           ))}
         </div>
       </div>
-    )
+    );
 
   return (
     <div>
@@ -240,5 +240,5 @@ export default function OverviewReport() {
         </div>
       </div>
     </div>
-  )
+  );
 }

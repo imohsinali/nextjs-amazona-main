@@ -1,6 +1,10 @@
-'use client'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardFooter } from '@/components/ui/card'
+'use client';
+import { Button } from '@/components/ui/button';
+
+import Card from '@/components/ui/card';
+import CardContent from '@/components/ui/cardContent';
+import CardFooter from '@/components/ui/cardFooter';
+
 import {
   Form,
   FormControl,
@@ -8,42 +12,42 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/components/ui/select';
 import {
   calculateFutureDate,
   formatDateTime,
   timeUntilMidnight,
-} from '@/lib/utils'
-import { ShippingAddressSchema } from '@/lib/validator'
-import { zodResolver } from '@hookform/resolvers/zod'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import CheckoutFooter from './checkout-footer'
-import { ShippingAddress } from '@/types'
-import useIsMounted from '@/hooks/use-is-mounted'
-import Link from 'next/link'
-import useCartStore from '@/hooks/use-cart-store'
-import ProductPrice from '@/components/shared/product/product-price'
+} from '@/lib/utils';
+import { ShippingAddressSchema } from '@/lib/validator';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import CheckoutFooter from './checkout-footer';
+import { ShippingAddress } from '@/types';
+import useIsMounted from '@/hooks/use-is-mounted';
+import Link from 'next/link';
+import useCartStore from '@/hooks/use-cart-store';
+import ProductPrice from '@/components/shared/product/product-price';
 import {
   APP_NAME,
   AVAILABLE_DELIVERY_DATES,
   AVAILABLE_PAYMENT_METHODS,
   DEFAULT_PAYMENT_METHOD,
-} from '@/lib/constants'
-import { createOrder } from '@/lib/actions/order.actions'
-import { toast } from '@/hooks/use-toast'
+} from '@/lib/constants';
+import { createOrder } from '@/lib/actions/order.actions';
+import { toast } from '@/hooks/use-toast';
 
 const shippingAddressDefaultValues =
   process.env.NODE_ENV === 'development'
@@ -64,10 +68,10 @@ const shippingAddressDefaultValues =
         phone: '',
         postalCode: '',
         country: '',
-      }
+      };
 
 const CheckoutForm = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const {
     cart: {
@@ -86,35 +90,35 @@ const CheckoutForm = () => {
     removeItem,
     setDeliveryDateIndex,
     clearCart,
-  } = useCartStore()
+  } = useCartStore();
 
-  const isMounted = useIsMounted()
+  const isMounted = useIsMounted();
 
   const shippingAddressForm = useForm<ShippingAddress>({
     resolver: zodResolver(ShippingAddressSchema),
     defaultValues: shippingAddress || shippingAddressDefaultValues,
-  })
+  });
   const onSubmitShippingAddress: SubmitHandler<ShippingAddress> = (values) => {
-    setShippingAddress(values)
-    setIsAddressSelected(true)
-  }
+    setShippingAddress(values);
+    setIsAddressSelected(true);
+  };
 
   useEffect(() => {
-    if (!isMounted || !shippingAddress) return
-    shippingAddressForm.setValue('fullName', shippingAddress.fullName)
-    shippingAddressForm.setValue('street', shippingAddress.street)
-    shippingAddressForm.setValue('city', shippingAddress.city)
-    shippingAddressForm.setValue('country', shippingAddress.country)
-    shippingAddressForm.setValue('postalCode', shippingAddress.postalCode)
-    shippingAddressForm.setValue('province', shippingAddress.province)
-    shippingAddressForm.setValue('phone', shippingAddress.phone)
-  }, [items, isMounted, router, shippingAddress, shippingAddressForm])
+    if (!isMounted || !shippingAddress) return;
+    shippingAddressForm.setValue('fullName', shippingAddress.fullName);
+    shippingAddressForm.setValue('street', shippingAddress.street);
+    shippingAddressForm.setValue('city', shippingAddress.city);
+    shippingAddressForm.setValue('country', shippingAddress.country);
+    shippingAddressForm.setValue('postalCode', shippingAddress.postalCode);
+    shippingAddressForm.setValue('province', shippingAddress.province);
+    shippingAddressForm.setValue('phone', shippingAddress.phone);
+  }, [items, isMounted, router, shippingAddress, shippingAddressForm]);
 
-  const [isAddressSelected, setIsAddressSelected] = useState<boolean>(false)
+  const [isAddressSelected, setIsAddressSelected] = useState<boolean>(false);
   const [isPaymentMethodSelected, setIsPaymentMethodSelected] =
-    useState<boolean>(false)
+    useState<boolean>(false);
   const [isDeliveryDateSelected, setIsDeliveryDateSelected] =
-    useState<boolean>(false)
+    useState<boolean>(false);
 
   const handlePlaceOrder = async () => {
     const res = await createOrder({
@@ -129,28 +133,28 @@ const CheckoutForm = () => {
       shippingPrice,
       taxPrice,
       totalPrice,
-    })
+    });
     if (!res.success) {
       toast({
         description: res.message,
         variant: 'destructive',
-      })
+      });
     } else {
       toast({
         description: res.message,
         variant: 'default',
-      })
-      clearCart()
-      router.push(`/checkout/${res.data?.orderId}`)
+      });
+      clearCart();
+      router.push(`/checkout/${res.data?.orderId}`);
     }
-  }
+  };
   const handleSelectPaymentMethod = () => {
-    setIsAddressSelected(true)
-    setIsPaymentMethodSelected(true)
-  }
+    setIsAddressSelected(true);
+    setIsPaymentMethodSelected(true);
+  };
   const handleSelectShippingAddress = () => {
-    shippingAddressForm.handleSubmit(onSubmitShippingAddress)()
-  }
+    shippingAddressForm.handleSubmit(onSubmitShippingAddress)();
+  };
   const CheckoutSummary = () => (
     <Card>
       <CardContent className='p-4'>
@@ -238,7 +242,7 @@ const CheckoutForm = () => {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 
   return (
     <main className='max-w-6xl mx-auto highlight-link'>
@@ -263,9 +267,9 @@ const CheckoutForm = () => {
                   <Button
                     variant={'outline'}
                     onClick={() => {
-                      setIsAddressSelected(false)
-                      setIsPaymentMethodSelected(true)
-                      setIsDeliveryDateSelected(true)
+                      setIsAddressSelected(false);
+                      setIsPaymentMethodSelected(true);
+                      setIsDeliveryDateSelected(true);
                     }}
                   >
                     Change
@@ -439,8 +443,8 @@ const CheckoutForm = () => {
                   <Button
                     variant='outline'
                     onClick={() => {
-                      setIsPaymentMethodSelected(false)
-                      if (paymentMethod) setIsDeliveryDateSelected(true)
+                      setIsPaymentMethodSelected(false);
+                      if (paymentMethod) setIsDeliveryDateSelected(true);
                     }}
                   >
                     Change
@@ -524,8 +528,8 @@ const CheckoutForm = () => {
                   <Button
                     variant={'outline'}
                     onClick={() => {
-                      setIsPaymentMethodSelected(true)
-                      setIsDeliveryDateSelected(false)
+                      setIsPaymentMethodSelected(true);
+                      setIsDeliveryDateSelected(false);
                     }}
                   >
                     Change
@@ -582,8 +586,8 @@ const CheckoutForm = () => {
                               <Select
                                 value={item.quantity.toString()}
                                 onValueChange={(value) => {
-                                  if (value === '0') removeItem(item)
-                                  else updateItem(item, Number(value))
+                                  if (value === '0') removeItem(item);
+                                  else updateItem(item, Number(value));
                                 }}
                               >
                                 <SelectTrigger className='w-24'>
@@ -712,6 +716,6 @@ const CheckoutForm = () => {
         </div>
       </div>
     </main>
-  )
-}
-export default CheckoutForm
+  );
+};
+export default CheckoutForm;
