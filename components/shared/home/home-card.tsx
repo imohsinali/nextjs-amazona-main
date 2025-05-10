@@ -10,7 +10,7 @@ const HomeCard4 = dynamic(() => import('./home-card3'));
 
 export default async function HomeCard() {
   return (
-    <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 md:gap-4'>
+    <div className='mx-4 m-2 space-y-10 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 md:gap-4'>
       <HomeCard1 />
       <HomeCard2 />
       <HomeCard3 />

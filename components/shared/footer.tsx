@@ -28,7 +28,7 @@ export default function Footer() {
           <p> © 2020-2024, {APP_NAME}, Inc. or its affiliates</p>
         </div>
         <div className='mt-8 flex justify-center text-sm text-gray-400'>
-          Alipur,Islamabad, Pakistan, Zip 46000 | +92 3493664946
+          Alipur,Islamabad, Pakistan, Zip 46000 | +966511328928
         </div>
       </div>
     </footer>
