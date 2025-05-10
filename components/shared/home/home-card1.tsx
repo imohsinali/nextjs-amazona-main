@@ -6,8 +6,6 @@ import { toSlug } from '@/lib/utils';
 import { getAllCategories } from '@/lib/actions/product.actions';
 import { Skeleton } from '@/components/ui/skeleton';
 const Card = dynamic(() => import('../../ui/card'));
-const CardContent = dynamic(() => import('../../ui/cardContent'));
-const CardFooter = dynamic(() => import('../../ui/cardFooter'));
 
 // import { Skeleton } from '@/components/ui/skeleton';
 
